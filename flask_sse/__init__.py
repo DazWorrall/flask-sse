@@ -1,1 +1,1 @@
-from .flask_sse import Sse, send_event
+from .flask_sse import sse, send_event

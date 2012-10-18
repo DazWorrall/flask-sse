@@ -1,8 +1,7 @@
 from sse import Sse as PySse
 from redis import StrictRedis
 from redis import ConnectionPool as RedisConnectionPool
-from flask.views import View
-from flask import json, current_app
+from flask import json, current_app, Blueprint, request
 
 class ConnectionPool(object):
     pool = {}
@@ -46,15 +45,17 @@ class SseStream(object):
                     yield data
         
 
-class Sse(View):
+sse = Blueprint('sse', __name__)
 
-    def dispatch_request(self):
-        conn = ConnectionPool.get_connection()
-        return current_app.response_class(
-            SseStream(conn, 'sse'), 
-            direct_passthrough=True, 
-            mimetype='text/event-stream',
-        )
+@sse.route('/')
+def stream():
+    conn = ConnectionPool.get_connection()
+    channel = request.args.get('channel', 'sse')
+    return current_app.response_class(
+        SseStream(conn, channel), 
+        direct_passthrough=True, 
+        mimetype='text/event-stream',
+    )
 
 def send_event(event_name, data, channel='sse'):
     conn = ConnectionPool.get_connection()

@@ -1,0 +1,5 @@
+*.pyc
+*.swp
+*.db
+build/
+docs/_*
