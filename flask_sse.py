@@ -47,7 +47,7 @@ class SseStream(object):
 
 sse = Blueprint('sse', __name__)
 
-@sse.route('/')
+@sse.route('')
 def stream():
     conn = ConnectionPool.get_connection()
     channel = request.args.get('channel', 'sse')
