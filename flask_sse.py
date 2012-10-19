@@ -40,7 +40,7 @@ class SseStream(object):
         for message in self.pubsub.listen():
             if message['type'] == 'message':
                 event, data = json.loads(message['data'])
-                sse.add_message(event, json.dumps(data))
+                sse.add_message(event, data)
                 for data in sse:
                     yield data
         

@@ -5,10 +5,10 @@
 </head>
 <body>
   <script>
-    var source = new EventSource({{ url_for('sse.stream', channel=request.args.get('channel', 'test')) }});
+    var source = new EventSource("{{ url_for('sse.stream', channel=request.args.get('channel', 'test')) }}");
     source.addEventListener('testevent', function(e) {
       var data = JSON.parse(e.data);
-      document.body.innerHTML += e.data + '<br>';
+      document.body.innerHTML += "New Message: " + data.message + '<br />';
     }, false);
   </script>
 </body>
