@@ -5,7 +5,7 @@
 </head>
 <body>
 <form method="POST" action="{{ url_for('send') }}">
-  <input name="message" />
+  <label for="message">Send message</label><input id="message" name="message" />
   <input type="submit" />
 </form>
 </body>
