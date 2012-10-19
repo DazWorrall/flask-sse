@@ -69,6 +69,10 @@ Caveats
 
 Subscribers will connect and block for a long time, so you should seriously consider running under an asynchronous WSGI server, such as gunicorn+gevent (like the example)
 
+Credits
+=======
+Inspired by [django-sse](https://github.com/niwibe/django-sse)
+
 
 [0]:http://flask.pocoo.org
 [1]:http://en.wikipedia.org/wiki/Server-sent_events
