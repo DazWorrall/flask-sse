@@ -36,13 +36,13 @@ class SseStream(object):
     def __iter__(self):
         sse = PySse()
         for data in sse:
-            yield data
+            yield str(data)
         for message in self.pubsub.listen():
             if message['type'] == 'message':
                 event, data = json.loads(message['data'])
                 sse.add_message(event, data)
                 for data in sse:
-                    yield data
+                    yield str(data)
         
 
 sse = Blueprint('sse', __name__)
