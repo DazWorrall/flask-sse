@@ -3,12 +3,14 @@ from redis import StrictRedis
 from redis import ConnectionPool as RedisConnectionPool
 from flask import json, current_app, Blueprint, request
 
+
 class ConnectionPool(object):
     pool = {}
 
     @classmethod
     def key(cls, *args, **kwargs):
-        return ':'.join(args) + ':'.join('%s=%s' % (k, v) for k, v in kwargs.items())
+        return ':'.join(args) + \
+            ':'.join('%s=%s' % (k, v) for k, v in kwargs.items())
 
     @classmethod
     def lookup_pool(cls, *args, **kwargs):
@@ -20,9 +22,9 @@ class ConnectionPool(object):
     @classmethod
     def get_connection(cls):
         pool = cls.lookup_pool(
-            host = current_app.config.get('SSE_REDIS_HOST', 'localhost'),
-            port = current_app.config.get('SSE_REDIS_PORT', 6379),
-            db = current_app.config.get('SSE_REDIS_DB', 0),
+            host=current_app.config.get('SSE_REDIS_HOST', 'localhost'),
+            port=current_app.config.get('SSE_REDIS_PORT', 6379),
+            db=current_app.config.get('SSE_REDIS_DB', 0),
         )
         return StrictRedis(connection_pool=pool)
 
@@ -43,19 +45,21 @@ class SseStream(object):
                 sse.add_message(event, data)
                 for data in sse:
                     yield data.encode('u8')
-        
+
 
 sse = Blueprint('sse', __name__)
+
 
 @sse.route('')
 def stream():
     conn = ConnectionPool.get_connection()
     channel = request.args.get('channel', 'sse')
     return current_app.response_class(
-        SseStream(conn, channel), 
-        direct_passthrough=True, 
+        SseStream(conn, channel),
+        direct_passthrough=True,
         mimetype='text/event-stream',
     )
+
 
 def send_event(event_name, data, channel='sse'):
     conn = ConnectionPool.get_connection()
