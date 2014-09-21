@@ -42,7 +42,7 @@ Clients can subscribe to different channels by setting 'channel' on the query st
     
     #######
         
-    var source = new EventSource("{{ url_for('sse.stream'), channel='logs' }}")    
+    var source = new EventSource("{{ url_for('sse.stream', channel='logs') }}")    
     
 Being a blueprint, you can attach a before_request handler to handle things like access control:
 
