@@ -69,6 +69,8 @@ Caveats
 
 Subscribers will connect and block for a long time, so you should seriously consider running under an asynchronous WSGI server, such as gunicorn+gevent (like the example)
 
+I should also say I'm not really maintaining this beyond accepting the odd pull request - it was built as an experiment but I'm not using it in anger on anything production. I wont be publishing it on PyPi myself for the same reasons - if I start using it properly then it will go on PyPi and have some tests put around it.
+
 Credits
 =======
 Inspired by [django-sse](https://github.com/niwibe/django-sse)
