@@ -12,7 +12,7 @@ The extension provides 2 things - a blueprint with a single route for streaming 
     app.register_blueprint(sse, url_prefix='/stream')
     
     @app.route('/send')
-    def send_message()
+    def send_message():
         send_event('myevent', json.dumps({"message": "Hello!"}))
         
 You can then subscribe to these events in a supported browser:
@@ -37,7 +37,7 @@ The source comes with a basic example
 
 Clients can subscribe to different channels by setting 'channel' on the query string, which defaults to 'sse'. These correspond to redis channels.
 
-    def send_message()
+    def send_message():
         send_event('myevent', json.dumps({"line": "Something happened"}), channel='logs')
     
     #######
